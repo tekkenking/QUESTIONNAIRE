@@ -23,8 +23,8 @@
 					
 					<select class="form-control" id="has_subquestion" name="subquestion" validate="required">
 						<!--<option value="">.. Select ..</option> -->
-						<option value="no" selected="selected">No</option>
-						<option value="yes">Yes</option>
+						<option value=0 selected="selected">No</option>
+						<option value=1>Yes</option>
 					</select>
 					
 				</div>
@@ -247,16 +247,16 @@ $(function(){
 
 	/** SUB QUESTION OPTIONS  **/
 	var $subQns = {
-		ShowAddButton : function(parentID, dis){
-			var disVal = $(dis).val();
+		ShowAddButton : function(parentID, option){
+			
 
-			if( disVal !== '' ){
+			if( option !== '' ){
 				$(parentID + ' .addSubquestionButton').removeClass('hide');
 			}else{
 				$(parentID + ' .addSubquestionButton').addClass('hide');
 			}
 
-			$('.subquestionoptiontypelabel').text(disVal);
+			$('.subquestionoptiontypelabel').text(option);
 
 			//We remove any panel already visible
 			$('#subquestionOptionWrapper .SubquestionOptionPanel').remove();
@@ -405,17 +405,23 @@ $(function(){
 	function defaultSubQuestionPanel(){
 		$qns.subQuestionPanel('show'); //We show subQuestion Panel
 		$qns.optionType('hide'); //We hide Question Options Type
+		$subQns.ShowAddButton('#subquestionOptionWrapper .SubquestionOptionType', 'radio');
+
+		//We Add 2 subquestion radio panel
+		for(k=0; k < 2; k++){
+			$subQns.AddPanel('#subquestionOptionWrapper', 'dis');
+		}
 	}
 
 	/**  HAS SUB QUESTION **/
 	$('#has_subquestion').change(function(e){
 		var has_subquestion = $(this).val();
 
-		if( has_subquestion === 'yes' )
+		if( has_subquestion === 1 )
 		{
 			defaultSubQuestionPanel();
 			//$qns.child('show'); //We have to show Question child
-		}else if( has_subquestion === 'no' ){
+		}else if( has_subquestion === 0 ){
 			defaultQuestionPanel();
 		}//else{
 			//$qns.child('hide') //We have to hide Question child
@@ -457,7 +463,8 @@ $(function(){
 	/** SELECT SUB-QUESTION OPTION TYPE **/
 	$('#subquestionOptionWrapper').on('change', '#selectSubquestionOptionType', function(e){
 		e.preventDefault();
-		$subQns.ShowAddButton('#subquestionOptionWrapper .SubquestionOptionType', this);
+		var option = $(this).val();
+		$subQns.ShowAddButton('#subquestionOptionWrapper .SubquestionOptionType', option);
 	});
 
 	/** ADD SUB-QUESTION PANEL **/

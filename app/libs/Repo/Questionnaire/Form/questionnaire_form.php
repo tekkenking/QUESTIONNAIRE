@@ -20,9 +20,9 @@ class Questionnaire_form extends Baseform
 		$this->question();
 
 		//Does it have SubQuestion
-		if( $this->qns['questionnaire']['has_subquestion'] === 'yes' ){
+		if( $this->qns['questionnaire']['has_subquestion'] === 1 ){
 			$this->subQuestion();
-			$this->qns['questionnaire']['option_type'] = null;
+			$this->qns['questionnaire']['answer_type'] = null;
 		}
 
 		tt($this->qns);
@@ -33,7 +33,7 @@ class Questionnaire_form extends Baseform
 		//Lets get Question first:
 		$this->qns['questionnaire']['question'] = $this->allinputs['question'];
 		$this->qns['questionnaire']['has_subquestion'] = $this->allinputs['subquestion'];
-		$this->qns['questionnaire']['option_type'] = $this->allinputs['optiontype'];
+		$this->qns['questionnaire']['answer_type'] = $this->allinputs['optiontype'];
 		$this->qns['questionnaire']['active'] = 1;
 
 		$optionCounter = 0;
@@ -41,26 +41,26 @@ class Questionnaire_form extends Baseform
 
 			if( str_is('checkbox_*', $key) ){
 				$optionCounter++;
-				$this->qns['options'][$optionCounter] = $value;
+				$this->qns['answers'][$optionCounter] = $value;
 			}
 
 			if( str_is('radio_*', $key) ){
 				$optionCounter++;
-				$this->qns['options'][$optionCounter] = $value;
+				$this->qns['answers'][$optionCounter] = $value;
 			}
 
 			if( str_is('opentext_*', $key) ){
 				$optionCounter++;
-				$this->qns['options'][$optionCounter] = $value;
+				$this->qns['answers'][$optionCounter] = $value;
 			}
 		}
 	}
 
 	private function subQuestion()
 	{
-		$this->qns['questionnaire']['option_type'] = null;
+		$this->qns['questionnaire']['answer_type'] = null;
 		//Lets know subQuestion Option Type
-		$this->qns['subquestion']['option_type'] = $this->allinputs['subquestion_optiontype'];
+		$this->qns['subquestion']['answer_type'] = $this->allinputs['subquestion_optiontype'];
 
 		//Label
 		$counter = 0;

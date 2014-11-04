@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateSubQuestionsTable extends Migration {
+class CreateRecordsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,15 +12,15 @@ class CreateSubQuestionsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('sub_questions', function(Blueprint $table)
+		Schema::create('records', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->integer('branch_id');
 			$table->integer('question_id');
-			$table->string('sub_quesstion');
-			$table->string('answer_type');
-			$table->boolean('active');
+			$table->integer('sub_question_id')->nullable();
+			$table->integer('answer_id')->nullable();
+			$table->integer('offered_answer_id')->nullable();
 			$table->timestamps();
-			$table->softDeletes();
 		});
 	}
 
@@ -32,7 +32,7 @@ class CreateSubQuestionsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('sub_questions');
+		Schema::drop('records');
 	}
 
 }

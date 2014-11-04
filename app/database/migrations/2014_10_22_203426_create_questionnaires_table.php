@@ -16,8 +16,8 @@ class CreateQuestionnairesTable extends Migration {
 		{
 			$table->increments('id');
 			$table->text('question');
-			$table->boolean('as_subquestion');
-			$table->text('option_type');
+			$table->boolean('has_sub_question');
+			$table->string('answer_type');
 			$table->boolean('active');
 			$table->timestamps();
 			$table->softDeletes();

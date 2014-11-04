@@ -6,9 +6,7 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"zizaco/entrust": "1.2.*@dev",
-		"zizaco/confide": "~4.0@dev",
-		"laravelbook/ardent": "2.*",
-		"watson/validating": " 0.10.*"
+		"zizaco/confide": "~4.0@dev"
 	},
 	"autoload": {
 		"classmap": [
