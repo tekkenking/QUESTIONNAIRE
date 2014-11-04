@@ -1,0 +1,23 @@
+.khaki-bg{
+    background-color: khaki !important;
+    color: #747474 !important;
+}
+
+.panel-button{
+	position: relative;
+	top: -6px;
+	float: right;
+}
+
+.panel-button-left{
+	float: left !important;
+}
+
+.panel-pink, .panel-pink > .panel-heading {
+    border-color: #7c2257;
+}
+
+.panel-pink > .panel-heading{
+    background-color: #ac5287;
+    color: #ffffff;
+}
