@@ -1,7 +1,6 @@
 <?php
 
 use libs\Repo\Branch\Branch_Eloquent as Branch;
-
 use libs\Repo\branch\form\Branch_form as Form;
 
 class BranchesController extends \SecureBaseController {
@@ -24,31 +23,45 @@ class BranchesController extends \SecureBaseController {
 	{
 
   	 	$js = [
-				'smart.js.plugin.datatables' => [
+				'smart,js,plugin,datatables' => [
 					'jquery.dataTables'			=>	'jquery.dataTables.min.js',
 					'dataTables.colVis'			=>	'dataTables.colVis.min.js',
 					'dataTables.tableTools'		=>	'dataTables.tableTools.min.js',
 					'dataTables.bootstrap'		=>	'dataTables.bootstrap.min.js'
 				],
 
-				'smart.js.notification'		=> [
+				'smart,js,notification'		=> [
 					'smartnotification'			=>	'SmartNotification.min.js',
 				],
 
-				'bucketcodes.js' 				 => [
+				'bucketcodes,js' 				 => [
 					'ajax-request-lite'			=>	'ajax-request-lite.js',
 					'deleteitemx'				=>	'deleteitemx.js'
+				],
+
+				'tagmanager'				=> [
+					'tagmanager'				=>	'tagmanager.js'
+				]
+		];
+
+		$css = [
+				'tagmanager'				=> [
+					'tagmanager'				=>	'tagmanager.css'
 				]
 		];
 
 		Larasset::start('footer')
 				->storejs($js)
-				->js('jquery.dataTables', 'dataTables.colVis', 'dataTables.tableTools', 'dataTables.bootstrap', 'ajax-request-lite', 'smartnotification', 'deleteitemx');
+				->js('jquery.dataTables', 'dataTables.colVis', 'dataTables.tableTools', 'dataTables.bootstrap', 'ajax-request-lite', 'smartnotification', 'deleteitemx', 'tagmanager');
+
+		Larasset::start('header')
+				->storecss($css)
+				->css('tagmanager');
 
 
 		$branches['branches'] = $this->branch->listAll();
 
-		//tt($branches);
+		//tt($branches['branches']->toArray());
 
 		$this->layout->title = 'List Branches';
 		$this->layout->content = View::make('branches.index', $branches);
@@ -74,12 +87,20 @@ class BranchesController extends \SecureBaseController {
 	public function store()
 	{
 
-		$status = $this->form->process();
+		$status = $this->form->onlyValidate();
 
 		if( ! $status ){
 			$data = Ajaxalert::error($this->form->errors())->get();
 		}else{
-			$data = Ajaxalert::success('Saved!')->url(URL::route('branches.index'))->get();
+			$branchArr = $this->form->onlyProcess();
+
+			foreach ($branchArr as $branch) {
+				$this->form->onlySave($branch);
+			}
+
+			$data = Ajaxalert::success('Saved!')
+				->url(URL::route('branches.index'))
+				->get();
 		}
 
 		return Response::json($data);
@@ -95,6 +116,27 @@ class BranchesController extends \SecureBaseController {
 	public function show($id)
 	{
 		//
+	}
+
+	public function toggleState($id)
+	{	
+
+		$newState = ( Input::get("state") == 1 ) ? 0 : 1;
+		$statemessage = ( $newState == 1 ) ? 'Active' : 'Inactive';
+
+		$status = $this->branch->toggleState($id, $newState);
+
+		if( $status ){
+			$msg = Ajaxalert::arrayMessage([
+				'id' 		=> $id,
+				'stateint' 	=> $newState,
+				'message'	=> $statemessage
+				])->get();
+		}else{
+			$msg = Ajaxalert::error('Unknown error occured')->get();
+		}
+
+		return Response::json($msg);
 	}
 
 	/**

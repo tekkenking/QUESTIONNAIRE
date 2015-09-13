@@ -13,16 +13,16 @@
 		{{Larasset::start('header')->show('scripts')}}
 
 		<!-- #FAVICONS -->
-		<link rel="shortcut icon" href="asset_vendors/smart/img/favicon/favicon.ico" type="image/x-icon">
-		<link rel="icon" href="asset_vendors/smart/img/favicon/favicon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="asset_vendors/bucketcodes/img/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="asset_vendors/bucketcodes/img/favicon.ico" type="image/x-icon">
 
 				<!-- #APP SCREEN / ICONS -->
 		<!-- Specifying a Webpage Icon for Web Clip 
 			 Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html -->
-		<link rel="apple-touch-icon" href="asset_vendors/smart/img/splash/sptouch-icon-iphone.png">
+		<!--<link rel="apple-touch-icon" href="asset_vendors/smart/img/splash/sptouch-icon-iphone.png">
 		<link rel="apple-touch-icon" sizes="76x76" href="asset_vendors/smart/img/splash/touch-icon-ipad.png">
 		<link rel="apple-touch-icon" sizes="120x120" href="asset_vendors/smart/img/splash/touch-icon-iphone-retina.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="asset_vendors/smart/img/splash/touch-icon-ipad-retina.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="asset_vendors/smart/img/splash/touch-icon-ipad-retina.png">-->
 		
 		<!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -34,22 +34,29 @@
 		<link rel="apple-touch-startup-image" href="asset_vendors/smart/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
 </head>
 
-	<body  {{$body_attr}}>
+	<body {{$body_attr}} id="body">
 
-		{{$header}}
+		{{--$header--}}
 
 		{{$sidepanel}}
 
 		<div id="main" role="main">
-			<div id="ribbon">
+			<!--<div id="ribbon">
 				<ol class="breadcrumb">
-					<!-- This is auto generated -->
+					
 				</ol>
-			</div>
+			</div>-->
 
 			<div id="content">
 				{{$content}}
 			</div>
+
+		</div>
+
+		<div id="floating-footer-option">
+			<a href="{{{URL::route('options.floatview')}}}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#remoteModal"> 
+				<i class="fa fa-list-ul fa-2x"></i> 
+			</a>
 		</div>
 
 		{{Larasset::start('footer')->show('scripts')}}
@@ -60,6 +67,16 @@
 		
 		{{Larasset::start()->get_inlinescript()}}
 
+<!-- Dynamic Modal -->  
+<div class="modal fade" id="remoteModal" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true">  
+    <div class="modal-dialog">  
+        <div class="modal-content">
+        	<!-- content will be filled here from "ajax/modal-content/model-content-1.html" -->
+        </div>  
+    </div>  
+</div>  
+<!-- /.modal --> 
+		
 	</body>
 
 </html>

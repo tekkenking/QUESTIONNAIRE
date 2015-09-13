@@ -14,12 +14,12 @@
 				<div class="form-group">
 					<input type="text" class="form-control" name="name" value="{{{$branch->name}}}" placeholder="Branch name" />
 				</div>
-				<div class="form-group">
+				<!--<div class="form-group">
 					<textarea class="form-control" name="note" placeholder="Note" rows="2">{{{$branch->note}}}</textarea>
-				</div>
+				</div>-->
 			</div>
 		</div>
-		<div class="row">
+		<!--<div class="row">
 			<div class="col-md-6">
 				<div class="form-group">
 					<label for="category"> Status</label>
@@ -29,7 +29,7 @@
 					</select>
 				</div>
 			</div>
-		</div>
+		</div>-->
 	{{Form::close()}}
 </div>
 <div class="modal-footer">
@@ -37,20 +37,20 @@
 		Cancel
 	</button>
 	<button type="submit" class="btn btn-primary" id="modal_update_branch">
-		 Update Changes
+		 Update
 	</button>
 </div>
 
 
-	<script type="text/javascript">
-		$(function(){
-			$(document).on("click", "#modal_update_branch", function(e){
-				e.preventDefault();
-				$('form#update-branches').ajaxrequest({
-					msgPlace: '.error-msg',
-					redirectDelay: 500,
-					ajaxType: 'PUT'
-				});
+<script type="text/javascript">
+	$(function(){
+		$("#modal_update_branch").on("click", function(e){
+			e.preventDefault();
+			$('form#update-branches').ajaxrequest({
+				msgPlace: '.error-msg',
+				redirectDelay: 500,
+				ajaxType: 'PUT'
 			});
 		});
-	</script>
+	});
+</script>

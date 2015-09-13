@@ -1,0 +1,23 @@
+{
+    "name": "bucketcodes/larabackupsqlite",
+    "description": "",
+    "authors": [
+        {
+            "name": "BucketCodes",
+            "email": "bucketcodes@yahoo.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Bucketcodes\\Larabackupsqlite\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

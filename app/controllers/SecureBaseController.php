@@ -23,6 +23,8 @@ class SecureBaseController extends \BaseController{
 	{
 		$this->layout->header = View::make('layouts.secure.header');
 		$this->layout->sidepanel = View::make('layouts.secure.sidepanel');
+
+		View::composer('layouts.secure.sidepanel', 'IssueComposer');
 	}
 
 }

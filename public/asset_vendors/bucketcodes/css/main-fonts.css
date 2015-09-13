@@ -10,8 +10,17 @@
   src: url('../fonts/Open-Sans/OpenSans-Regular.ttf')  format('truetype');
 }
 
-.text-regular{
+@font-face {
+  font-family: 'Open Sans Bold';
+  src: url('../fonts/Open-Sans/OpenSans-Bold.ttf')  format('truetype');
+}
+
+.text-regular, .san-regular{
   font-family: 'Open Sans Regular';
+}
+
+.text-bold, .san-bold{
+  font-family: 'Open Sans Bold';
 }
 
 /*@font-face {

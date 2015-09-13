@@ -14,6 +14,7 @@ class BaseController extends Controller {
 	 */
 	protected function setupLayout()
 	{
+		
 		if ( ! is_null($this->layout))
 		{
 			$this->layout = View::make($this->layout);
@@ -32,14 +33,14 @@ class BaseController extends Controller {
 		Larasset::start()->vendor_dir = 'asset_vendors/';
 
 		$css = [
-				'smart.css'	=> [
+				'smart,css'	=> [
 					'bootstrap' 		=> 'bootstrap.min.css',
 					'fontawesome' 		=> 'font-awesome.min.css',
 					'smart_production'	=> 'smartadmin-production.min.css',
 					'smart_skin'		=> 'smartadmin-skins.min.css'
 				],
 
-				'bucketcodes.css' => [
+				'bucketcodes,css' => [
 					'main'				=> 'main.css',
 					'main-fonts'		=> 'main-fonts.css'
 				]
@@ -47,17 +48,27 @@ class BaseController extends Controller {
 
 		$js = [
 
-				'smart.js.libs'	=> [
+				'smart,js,libs'	=> [
 					'jquery'			=>	'jquery-2.0.2.min.js',
 					'jquery-ui'			=>	'jquery-ui-1.10.3.min.js',
 				],
 
-				'smart.js.bootstrap' => [
+				'smart,js,bootstrap' => [
 					'bootstrap'			=>	'bootstrap.min.js',
 				],
 
-				'bucketcodes.js'		=>	[
-					'debugger'			=>	'debugger.js'
+				'bucketcodes,js'		=>	[
+					'debugger'			=>	'debugger.js',
+					'ajaxtab'			=>	'ajaxtab.js',
+					'freset'			=>	'freset.js'
+				],
+
+				'moment'			=> [
+					'moment'			=> 'moment_2.8.4.js'
+				],
+
+				'underscore,js'		=> [
+					'underscore'		=> 'underscore.js'
 				]
 		];
 
@@ -70,7 +81,7 @@ class BaseController extends Controller {
 
 		Larasset::start('header')->js('jquery', 'jquery-ui');
 
-		Larasset::start('footer')->js('bootstrap', 'debugger');
+		Larasset::start('footer')->js('bootstrap', 'debugger', 'ajaxtab', 'moment', 'underscore', 'freset');
 	}
 
     /**

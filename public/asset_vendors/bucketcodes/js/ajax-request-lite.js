@@ -24,14 +24,10 @@
 	dataContent:'',
 	redirectDelay: 2000,
 	extraContent:'',
-	validate: { 
-					'quantity_removed': // Name of the field to validate
-						[
-							// TYPE:ERROR MESSAGE
-							{'required':'Field can not be empty'}, 
-							{'integer':'value must be number'}
-						]
-					},
+	validate: { vtype : {
+			'name' : { required : 'left blank not' }
+						}
+			  },
 
 */
 
@@ -46,7 +42,7 @@ $('body').on('click', 'button[data-close="alert"]', function(e){
 	c.fn.extend({
 		ajaxrequest : function (options) {
 				//e.preventDefault();
-			var isCloseModalBox, o, form, msg='', alerttype, ajaxr, errorContainer ='', data = undefined, datax='', newClass;
+			var isCloseModalBox, o, form, msg='', alerttype, ajaxr, errorContainer ='', data = undefined, datax='', newClass, callbacks;
 			
 			o = c.extend({
 					ajaxloader:'',
@@ -74,7 +70,9 @@ $('body').on('click', 'button[data-close="alert"]', function(e){
 					immediatelyAfterAjax_callback:'',
 					beforeAjax_callback:'',
 					afterAjax_callback:'',
+					successCallback: '',
 					clearfields: '',
+					clearfieldsExcludes: '',
 					
 			},  options );
 			
@@ -160,8 +158,7 @@ $('body').on('click', 'button[data-close="alert"]', function(e){
 					//_debug(o.beforeAjax_callback);
 
 					if( o.beforeAjax_callback !== '' ){
-							var callbacks = c.Callbacks();
-							
+							callbacks = c.Callbacks();
 							callbacks.add( o.beforeAjax_callback );
 							callbacks.fire();
 						}
@@ -187,9 +184,7 @@ $('body').on('click', 'button[data-close="alert"]', function(e){
 
 						if( o.immediatelyAfterAjax_callback !== '' ){
 						
-							var callbacks = c.Callbacks();
-							// add the function "foo" to the list
-							//_debug(data);
+							callbacks = c.Callbacks();
 							callbacks.add( o.immediatelyAfterAjax_callback );
 							callbacks.fire(data);
 							return false;
@@ -250,14 +245,34 @@ $('body').on('click', 'button[data-close="alert"]', function(e){
 						//With the assigned twitter_boostrap alert class attribute, from server
 						alerttype = (data.alerttype === undefined) ? data.status : data.alerttype;
 						statusMessage();
+
+						if( o.successCallback !== '' && (data.status !== 'danger') || (data.status !== 'error' ) ){
+
+							callbacks = c.Callbacks();
+							callbacks.add( o.successCallback );
+							callbacks.fire(data);
+						}
 						
 
 						//Closing modalbox
 						if( isCloseModalBox === true ){
-							setInterval(function(){
-								form.closest('.modal').modal('hide');
+							//setInterval(function(){
+								var disModal = form.closest('.modal');
+								disModal.modal('hide');
+
+
+								if(o.ajaxRefresh !== false  && data.status === 'success'){
+									disModal.on('hidden.bs.modal', function(e){
+										//_debug(e);
+										c(o.ajaxRefresh).ajaxrefresh();
+									});
+
+									//o.ajaxRefresh = false;
+								}
+
+								
 								//window.ajaxrefresh();
-							}, parseInt(o.redirectDelay));
+							//}, parseInt(o.redirectDelay));
 						}
 
 						//If ajax page refresh and browser refresh is active at the same time? Ajax refresh would be disabled
@@ -272,9 +287,9 @@ $('body').on('click', 'button[data-close="alert"]', function(e){
 
 
 						//Ajax refresh NOT YET COMPLETE
-						//if(o.ajaxRefresh !== false  && data.status === 'success'){
-						//	c(o.ajaxRefresh).ajaxrefresh();
-						//}
+						if(o.ajaxRefresh !== false  && data.status === 'success'){
+							c(o.ajaxRefresh).ajaxrefresh();
+						}
 	
 						//Hide Ajax Loader if show
 						if(c.trim(o.ajaxloader) !== ''){
@@ -295,12 +310,16 @@ $('body').on('click', 'button[data-close="alert"]', function(e){
 						}
 					
 						//For selected fields clearance after success
-						if( o.clearfields !== '' ){
-							clearfields();
+						if( o.clearfields !== '' && (data.status !== 'danger' && data.status !== 'error' ) ){
+							//clearfields();
+							form.freset({
+								clearfields : o.clearfields,
+								clearfieldsExcludes : o.clearfieldsExcludes
+							});
 						}
 						
 						if( o.afterAjax_callback !== '' ){
-							var callbacks = c.Callbacks();
+							callbacks = c.Callbacks();
 							// add the function "foo" to the list
 							//_debug(data);
 							callbacks.add( o.afterAjax_callback );
@@ -348,29 +367,6 @@ $('body').on('click', 'button[data-close="alert"]', function(e){
 					.prop('class', ((newClass.indexOf('.') !== -1) ? newClass.substr(1) : newClass) + ' ' + 'alert alert-' + alerttype ).show()
 
 				}
-			}
-
-			function clearfields(){
-				//For clearfields
-				var cfields = [];
-
-				if( o.clearfields === true ){
-					var ar = form.find('input[type="text"], input[type="password"], input[type="textarea"], select').not('input[name="_token"]').get();
-
-					$.each(ar, function(i,v){
-						cfields.push($(v).attr('name'));
-					});
-
-				}else{
-					cfields = o.clearfields.split(',');
-				}
-				
-				$.each(cfields, function(i,v){
-					var $cf = $('[name="'+ v +'"]');
-					if( $cf.is("input") ) $cf.val('');//If it's Input type
-					if( $cf.is("textarea") ) $cf.text(''); //If its text area
-				
-				});
 			}
 	
 

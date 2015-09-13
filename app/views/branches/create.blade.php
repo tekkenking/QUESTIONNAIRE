@@ -11,14 +11,14 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group">
-					<input type="text" class="form-control" name="name" placeholder="Branch name" required />
+					<input type="text" class="form-control tm-input tm-input-warning" name="name" placeholder="Branch name" required />
 				</div>
-				<div class="form-group">
+				<!--<div class="form-group">
 					<textarea class="form-control" name="note" placeholder="Note" rows="5" required></textarea>
-				</div>
+				</div>-->
 			</div>
 		</div>
-		<div class="row">
+		<!--<div class="row">
 			<div class="col-md-6">
 				<div class="form-group">
 					<label for="category"> Status</label>
@@ -28,7 +28,7 @@
 					</select>
 				</div>
 			</div>
-		</div>
+		</div>-->
 	{{Form::close()}}
 </div>
 <div class="modal-footer">
@@ -36,19 +36,24 @@
 		Cancel
 	</button>
 	<button type="submit" class="btn btn-primary" id="modal_add_branch">
-		<i class="fa fa-plus"></i> Add
+		<i class="fa fa-plus"></i> Create
 	</button>
 </div>
 
 
 	<script type="text/javascript">
 		$(function(){
-			$(document).on("click", "#modal_add_branch", function(e){
+			$("#modal_add_branch").on("click", function(e){
 				e.preventDefault();
 				$('form#store-branches').ajaxrequest({
 					msgPlace: '.error-msg',
 					redirectDelay: 500
 				});
+			});
+
+			$(".tm-input").tagsManager({
+				tagCloseIcon : '<i class="fa fa-times"></i>',
+				hiddenTagListName: 'name',
 			});
 		});
 	</script>

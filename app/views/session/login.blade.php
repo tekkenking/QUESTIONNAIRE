@@ -4,40 +4,13 @@
 	<div class="container" id="content">
 
 		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
-				<h1 class="txt-color-red login-header-big">SmartAdmin</h1>
-				<div class="hero">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
 
-					<div class="pull-left login-desc-box-l">
-						<h4 class="paragraph-header">It's Okay to be Smart. Experience the simplicity of SmartAdmin, everywhere you go!</h4>
-						<div class="login-app-icons">
-							<a class="btn btn-danger btn-sm" href="javascript:void(0);">Frontend Template</a>
-							<a class="btn btn-danger btn-sm" href="javascript:void(0);">Find out more</a>
-						</div>
-					</div>
-					
-					<img style="width:210px" alt="" class="pull-right display-image" src="img/demo/iphoneview.png">
-
-				</div>
-
-				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-						<h5 class="about-heading">About SmartAdmin - Are you up to date?</h5>
-						<p>
-							Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.
-						</p>
-					</div>
-					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-						<h5 class="about-heading">Not just your average template!</h5>
-						<p>
-							Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi voluptatem accusantium!
-						</p>
-					</div>
-				</div>
-
+			<div style="margin-top:-50px; margin-bottom:30px">
+				<img src={{asset_vendors("bucketcodes/img/fbn_qns.png")}} alt="Questionnaire Logo">
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
-				<div class="well no-padding">
+
+				<div class="well no-padding form-signin">
 					{{Form::open( array( 'route'=>'session.auth.login', 'id'=>'login-form', 'class'=>'smart-form client-form', 'novalidate'=>'novalidate'))}}
 						<header>
 							Admin Access
@@ -53,10 +26,10 @@
 							@endif
 							
 							<section>
-								<label class="label" for="email">{{{ Lang::get('confide::confide.e_mail') }}}</label>
+								<label class="label" for="username">{{{ Lang::get('confide::confide.username') }}}</label>
 								<label class="input"> <i class="icon-append fa fa-user"></i>
-									<input type="email" name="email" placeholder="{{{ Lang::get('confide::confide.e_mail') }}}" id="email" value="{{{ Input::old('email') }}}">
-									<b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter your admin e_mail</b></label>
+									<input type="text" name="username" placeholder="{{{ Lang::get('confide::confide.username') }}}" id="username" value="{{{ Input::old('username') }}}">
+									<b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter your admin username</b></label>
 							</section>
 
 							<section>
@@ -90,13 +63,15 @@
 			//runAllForms();
 
 			$(function() {
+
+				$("html, #extr-page #main").css({background : "none repeat scroll 0 0 #162e4d"});
+
 				// Validation
 				$("#login-form").validate({
 					// Rules for form validation
 					rules : {
-						email : {
-							required : true,
-							email : true
+						username : {
+							required : true
 						},
 						password : {
 							required : true,
@@ -107,9 +82,8 @@
 
 					// Messages for form validation
 					messages : {
-						email : {
-							required : "Please enter your email",
-							email : "Please enter a VALID email"
+						username : {
+							required : "Please enter your username"
 						},
 						password : {
 							required : "Please enter your password"

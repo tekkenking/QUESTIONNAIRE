@@ -11,10 +11,16 @@ class Baseform extends validateme
 
 	protected $allinputs;
 
+	protected function assignInputs( $inputs = null )
+	{
+		$this->allinputs = ( $inputs === null || empty($inputs) ) 
+							? Input::all() 
+							: $inputs;
+	}
+
 	public function process()
 	{
-
-		$this->allinputs = Input::all();
+		$this->assignInputs();
 
 		//Lets Validate
 		if( ! $this->makeValidate() ){
@@ -27,47 +33,75 @@ class Baseform extends validateme
 		return $this->save();
 	}
 
-	private function makeValidate(){
+	public function onlyProcess(Array $inputs = null)
+	{
+		$this->assignInputs( $inputs );
 
-		//tt($this->model->rules);
+		return $this->beforeSave();
+	}
 
+	public function onlyValidate(Array $inputs = null)
+	{
+		$this->assignInputs( $inputs );
+
+		//Lets Validate
+		if( ! $this->makeValidate() ){
+			return false;
+		}
+
+		return true;
+	}
+
+	private function save(){
+		//tt($this->allinputs);
+		if( isset($this->allinputs['id']) ){
+			return $this->update();
+		}else{
+			return $this->create();
+		}
+	}
+
+	public function onlySave(Array $inputs = null)
+	{
+		$this->assignInputs( $inputs );
+
+		//Lets to save
+		return $this->create();
+	}
+
+	public function onlyUpdate( $question_id, Array $inputs=null )
+	{
+		//tt($inputs);
+		Input::merge(['id'=>$question_id]);
+		$this->allinputs = Input::all();
+		return $this->update();
+	}
+
+	private function makeValidate()
+	{
 		return $this->isValid( $this->model->rules );
-
-		//tt($rules);
-
-		//if( !isset($rules) ){
-		//	return false;
-		//}
-
-		//tt($this->model->rules);
-
-		//return $this->model->isValid();
-
-		//return $this->branch->validateCreate(
-		//	$this->model,
-		//	$rules['rules'], 
-		//	$rules['messages']
-		//);
 	}
 
 	protected function beforeSave($options = null){}
 
-	private function create(){
-		return $this->model->savex();
+	private function create()
+	{
+		//tt($this->allinputs);
+		return $this->model->savex( $this->allinputs );
 	}
 
-	private function update(){
-		return $this->model->update( $this->allinputs );
+	protected function update(){
+		return $this->model->updatex( $this->allinputs );
 	}
 
-	public function save(){
+	/*public function save(){
 
 		if( !isset($this->allinputs['id']) ){
 			return $this->create();
 		}else{
 			return $this->update($this->allinputs);
 		}
-	}
+	}*/
 
 	public function errors(){
 		return $this->validate_errors();

@@ -16,8 +16,8 @@ class CreateSubQuestionsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('question_id');
-			$table->string('sub_quesstion');
-			$table->string('answer_type');
+			$table->string('label', 10);
+			$table->string('sub_question');
 			$table->boolean('active');
 			$table->timestamps();
 			$table->softDeletes();

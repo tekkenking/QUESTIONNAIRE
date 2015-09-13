@@ -17,7 +17,8 @@ class CreateAnswersTable extends Migration {
 			$table->increments('id');
 			$table->integer('question_id');
 			$table->integer('sub_question_id')->nullable();
-			$table->string('answer');
+			$table->integer('option_id')->nullable();
+			$table->string('answer_type', 20);
 			$table->timestamps();
 			$table->softDeletes();
 		});

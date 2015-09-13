@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => false,
+	'debug' => true,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost/GIT/questionnaire',
+	'url' => 'http://localhost',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ return array(
 	|
 	*/
 
-	'timezone' => 'UTC',
+	'timezone' => 'Africa/Lagos',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -125,9 +125,13 @@ return array(
 		'Zizaco\Entrust\EntrustServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'libs\Ajaxalert\AjaxalertServiceProvider',
+		'libs\Makehash\MakehashServiceProvider',
 		'libs\Larasset\LarassetServiceProvider',
 		'libs\Validates\validateMeServiceProvider',
-		'libs\Form\FormServiceProvider'
+		'libs\Form\FormServiceProvider',
+		//'libs\SqliteBackup\SqliteBackupServiceProvider',
+		'Bucketcodes\Larabackupsqlite\LarabackupsqliteServiceProvider',
+		//'Barryvdh\Cors\CorsServiceProvider',
 	),
 
 	/*
@@ -195,7 +199,8 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Confide'    	=> 'Zizaco\Confide\Facade',
-		'Entrust'    	=> 'Zizaco\Entrust\EntrustFacade'
+		'Entrust'    	=> 'Zizaco\Entrust\EntrustFacade',
+		'Carbon'          => 'Carbon\Carbon',
 
 	),
 

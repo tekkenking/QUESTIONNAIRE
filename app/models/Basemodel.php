@@ -1,13 +1,10 @@
 <?php
 
-//use LaravelBook\Ardent\Ardent;
-
-//use Watson\Validating\ValidatingTrait;
-
-//use Watson\Validating\ValidatingModel as Watson;
-
-class Basemodel extends Eloquent
+class Basemodel extends \Eloquent
 {
+  use SoftDeletingTrait;
+
+  protected $dates = ['deleted_at'];
 
   protected $guarded = ['id'];
 
@@ -35,14 +32,16 @@ class Basemodel extends Eloquent
   }
 
 
-  public function savex()
+  public function savex( Array $data = null )
   {
 
-    $purged = $this->purger();
+      $purged = ( $data === null || empty($data) ) ? $this->purger() : $data;
 
-      $data = parent::create($purged);
+      //tt($purged);
 
-      return $data;
+      $model = parent::create($purged);
+
+      return $model;
   }
 
   /**
@@ -51,7 +50,7 @@ class Basemodel extends Eloquent
    * @param  array  $attributes
    * @return mixed
    */
-  public function update(array $attributes = array())
+  public function updatex(array $attributes = array())
   {
 
     $model = Parent::where('id', '=', $attributes['id']);

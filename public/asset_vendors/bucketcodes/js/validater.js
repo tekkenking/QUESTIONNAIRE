@@ -1,5 +1,11 @@
 /**
 * CODE WRITTEN BY BUCKETCODES
+
+	validate: { rules : {
+			'name' : { required : 'left blank not' }
+						}
+			  },
+
 */
 //Validation here
 (function(c){
@@ -7,14 +13,15 @@
 	c.fn.extend({
 		validater: function(options){
 			var o, errorContainer='', fieldx={}, fieldxRules={}, fields, rules, currentName, catchFirstError_element;
+
 			o = c.extend({
 				rules:false,
 				errorMessageType:'group',
 				vdata:''
 			}, options);
-			
+
 			var $that = (o.vdata === '') ? c(this) : o.vdata;
-			
+
 			//We must remove the error class from error fields
 			//if( o.errorMessageType !== 'group' ){
 				
@@ -22,7 +29,8 @@
 				
 			//}
 			
-			var textFields 	= $that.find(':input').not(':radio, :checkbox');
+			var textFields 	= $that.find(':input').not(':radio, :checkbox, button, input[name="_method"], input[name="_token"]');
+
 			var radios 		= $that.find(':radio');
 			var checkboxes 	= $that.find(':checkbox');
 			
@@ -38,27 +46,32 @@
 				required 		: 'is required',
 				email 			: 'is invalid',
 				integer 		: 'must be only numbers',
-				numerical		: 'must be only numbers',
 				phone 			: 'must be 11 digits',
-				fullname		: 'must be only letters with space and apostroph',
-				name			: 'must be letters',
+				name			: 'must be only letters with space and apostroph',
+				letter			: 'must be letters',
 				date 			: 'is invalid. Accepted format is either mm/dd/yyyy or mm-dd-yyyy',
 				range 			: 'out of range',
 				conf 			: 'is not equal to ',
 				alphanumeric	: 'must be only letters and numbers'
 			};
 
+			//Custom Rules;
+			rules.numerical = rules.integer;
+
 			var types = {
 							email			: 	/([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})/,
-							fullname 		: 	/^[A-Za-z][a-zA-Z \']+$/,
 							name 			: 	/^[A-Za-z][a-zA-Z \']+$/,
+							letter			:   /^[A-Za-z][a-zA-Z \s]+$/,
 							phone 			: 	/^[(]?\d{4}[)]?\s?-?\s?\d{3}\s?-?\s?\d{4}$/,
-							numerical		: 	/^[0-9]+$/,
 							integer			: 	/^[0-9]+$/,
 							date 			: 	/\b\d{1,2}[\/-]\d{1,2}[\/-]\d{4}\b/,
 							alphanumeric	:	/^[a-zA-Z0-9 ]+$/
 							//required	: 	//
 						};
+
+			//Custom Types
+			types.fullname = types.name;
+			types.numerical = types.integer;
 
 
 			//Text inputs Verified
@@ -81,7 +94,10 @@
 								fieldx[currentName]['conf'] = {field : confirmField, errormessage : rules['conf']};
 								
 							}else{
+
 								fieldx[currentName][k] = rules[k];
+
+								//_debug(fieldx);
 							}
 							
 						});
@@ -89,6 +105,8 @@
 				});
 				
 				o.rules = c.extend(true, fieldx, o.rules);
+
+				//_debug(o.rules);
 				
 				processValidation(textFields);
 			}
@@ -142,12 +160,14 @@
 			function processValidation(fields){
 			
 				c.each(fields, function(i, field){
+
 					//Validation starts here
 					if( o.rules[field.name] ){
 					
 						c.each(o.rules[field.name], function(k, v){
-							
+
 							if( k === 'required' ){ // Is required
+								//_debug(k);
 								if( field.value === '' || field.value === undefined || field.value.length < 1 ){
 									var fieldname = field.name;
 									focusMouseOnErrorElement(fieldname);

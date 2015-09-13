@@ -141,7 +141,7 @@ Class Larasset{
 		//Lets check for directory wahala
 		foreach ($assetsArray as $dir => $cssFiles) {
 			//if(  )
-				$directory = str_replace('.', '/', $dir) . '/';
+				$directory = str_replace(',', '/', $dir) . '/';
 
 				foreach ($cssFiles as $key => $file) {
 					$assets[$key] = $directory . $file;

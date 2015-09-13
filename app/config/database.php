@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => 'sqlite',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -49,7 +49,7 @@ return array(
 		'sqlite' => array(
 			'driver'   => 'sqlite',
 			'database' => __DIR__.'/../database/production.sqlite',
-			'prefix'   => '',
+			'prefix'   => 'fbq_',
 		),
 
 		'mysql' => array(
@@ -60,7 +60,7 @@ return array(
 			'password'  => 'gameover',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
-			'prefix'    => 'fbq',
+			'prefix'    => 'fbq_',
 		),
 
 		'pgsql' => array(

@@ -16,8 +16,10 @@ class CreateBranchesTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('name');
-			$table->text('note');
-			$table->boolean('active');
+			$table->integer('token')->nullable();
+			$table->text('note')->nullable();
+			$table->boolean('active')->default(1);
+			$table->integer('rank')->default(0);
 			$table->timestamps();
 			$table->softDeletes();
 		});

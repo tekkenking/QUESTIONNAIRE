@@ -1,54 +1,38 @@
-<!-- #NAVIGATION -->
-<!-- Left panel : Navigation area -->
-<!-- Note: This width of the aside area can be adjusted through LESS variables -->
 <aside id="left-panel">
 
 	<!-- User info -->
 	<div class="login-info">
 		<span> <!-- User image size is adjusted inside CSS, it should stay as is --> 
 			
-			<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-				<img src={{{asset_vendors("smart/img/avatars/sunny.png")}}} alt="{{{Auth::user()->username}}}" class="online" /> 
-
-				<span>
-
-
-
-					@if( Auth::check() )
-						{{{Auth::user()->firstname}}}
-					@endif
-				</span>
-			</a> 
+		<!-- PLACE YOUR LOGO HERE -->
+		<span id="logo"> <img src={{asset_vendors("bucketcodes/img/fbn_qns.png")}} alt="SmartAdmin"> </span>
+		<!-- END LOGO PLACEHOLDER -->
 			
 		</span>
 	</div>
-	<!-- end user info -->
 
-	<!-- NAVIGATION : This navigation is also responsive
-
-	To make this navigation dynamic please make sure to link the node
-	(the reference to the nav > ul) after page load. Or the navigation
-	will not initialize.
-	-->
 	<nav>
-		<!-- 
-		NOTE: Notice the gaps after each icon usage <i></i>..
-		Please note that these links work a bit different than
-		traditional href="" links. See documentation for details.
-		-->
 
-		<ul>
-			<li class="">
-				<a href="ajax/dashboard.html" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+		<ul class="firstbanknav">
+			<li>
+				<a href="{{{URL::route('home')}}}"><i class="fa fa-lg fa-fw fa-database"></i> <span class="menu-item-parent">Records | Issues <span class="txt-color-white label label-danger sidebar-issue-counter">{{$issueCounterComposer}}</span></span></a>
 			</li>
 			<li>
-				<a href="{{{URL::route('branches.index')}}}"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Manage Branches</span></a>
+				<a href="{{{URL::route('branches.index')}}}"><i class="fa fa-lg fa-fw fa-code-fork"></i> <span class="menu-item-parent">Manage Branches</span></a>
 			</li>			
 			<li>
-				<a href="{{{URL::route('questionnaires.index')}}}"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Manage Questions</span></a>
+				<a href="{{{URL::route('questionnaires.index')}}}"><i class="fa fa-lg fa-fw fa-question-circle"></i> <span class="menu-item-parent">Manage Questions</span></a>
+			</li>			
+			<li>
+				<a href="{{{URL::route('staffs.index')}}}"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Manage Staff</span></a>
+			</li>			
+			<li>
+				<a href="{{{URL::route('backuprestoredbs.index')}}}">
+				<i class="fa fa-lg fa-fw fa-refresh"></i>
+ <span class="menu-item-parent">Backup | </i>Restore DB</span></a>
 			</li>
 			<li>
-				<a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Records</span></a>
+				<a href="{{{route('session.logout')}}}" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out fa-lg fa-fw"></i> <span class="menu-item-parent">Log out</span></a>
 			</li>
 		</ul>
 	</nav>

@@ -3,16 +3,14 @@
 class Branch extends \Basemodel {
 	protected $fillable = [];
 
- 	protected $softDelete = true;
-
  	public $rules = [
- 		'name'	=> 'required'
+ 		'rules' => [
+			 		'name'	=> ['required', 'unique:branches,name,{ignore_id},id,deleted_at,NULL']
+		],
  	];
 
-	/*public $set_rules = array(
-			'rules'		=> array(
-					'name'	=>	"required"
-				),
-			'messages'	=> array()
-		);*/
+ 	public function records()
+ 	{
+ 		return $this->hasMany('Record', 'branch_id');
+ 	}
 }

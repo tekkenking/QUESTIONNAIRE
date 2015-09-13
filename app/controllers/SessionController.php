@@ -11,11 +11,11 @@ class SessionController extends NonSecureBaseController
     {
 
     	$js = [
-				'smart.js.plugin.jquery-validate' => [
+				'smart,js,plugin,jquery-validate' => [
 					'jquery-validate'	=>	'jquery.validate.min.js',
 				],
 
-				'smart.js.plugin.masked-input' => [
+				'smart,js,plugin,masked-input' => [
 					'masked-input'		=> 	'jquery.maskedinput.min.js'
 				]
 		];
@@ -77,11 +77,11 @@ class SessionController extends NonSecureBaseController
     {
 
    		$js = [
-				'smart.js.plugin.jquery-validate' => [
+				'smart,js,plugin,jquery-validate' => [
 					'jquery-validate'	=>	'jquery.validate.min.js',
 				],
 
-				'smart.js.plugin.masked-input' => [
+				'smart,js,plugin,masked-input' => [
 					'masked-input'		=> 	'jquery.maskedinput.min.js'
 				]
 		];

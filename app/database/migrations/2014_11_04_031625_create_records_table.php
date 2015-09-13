@@ -15,12 +15,16 @@ class CreateRecordsTable extends Migration {
 		Schema::create('records', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->integer('staff_id');
 			$table->integer('branch_id');
 			$table->integer('question_id');
-			$table->integer('sub_question_id')->nullable();
-			$table->integer('answer_id')->nullable();
-			$table->integer('offered_answer_id')->nullable();
+			$table->text('answer')->nullable();
+			$table->text('subquestion')->nullable();
+			$table->tinyInteger('issue_state')->nullable();
+			$table->dateTime('issue_created_at')->nullable();
+			$table->dateTime('date')->nullable();
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
